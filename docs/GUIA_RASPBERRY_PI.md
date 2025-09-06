@@ -105,23 +105,31 @@ sudo mkdir -p /var/www/html/gelo-canada
 cd /var/www/html/gelo-canada
 
 # Baixar o script de setup
-sudo wget https://raw.githubusercontent.com/seu-usuario/gelo-canada/main/scripts/raspberry_setup.sh
-sudo chmod +x raspberry_setup.sh
+sudo wget https://raw.githubusercontent.com/guilherme-granville/gelo-canada/main/scripts/install_raspberry.sh
+sudo chmod +x install_raspberry.sh
 ```
 
 ### **2. Executar o Script de Configuração:**
 ```bash
-sudo ./raspberry_setup.sh
+sudo ./install_raspberry.sh
 ```
 
 ### **3. Copiar Arquivos do Projeto:**
 ```bash
-# Via SCP (do seu computador):
-scp -r C:\xampp\htdocs\gelo-canada\* pi@[IP_RASPBERRY]:/var/www/html/gelo-canada/
+# Opção A: Via SCP (do seu computador):
+scp -r C:\xampp\htdocs\gelo-canada\* pi@192.168.3.10:/var/www/html/gelo-canada/
 
-# Ou via Git:
+# Opção B: Via Git (se o diretório estiver vazio):
+cd /var/www/html
+sudo rm -rf gelo-canada  # Remove diretório existente
+sudo git clone https://github.com/guilherme-granville/gelo-canada.git
+sudo chown -R www-data:www-data /var/www/html/gelo-canada
+
+# Opção C: Via Git (se o diretório já existir):
 cd /var/www/html/gelo-canada
-sudo git clone https://github.com/seu-usuario/gelo-canada.git .
+sudo git init
+sudo git remote add origin https://github.com/guilherme-granville/gelo-canada.git
+sudo git pull origin main
 sudo chown -R www-data:www-data /var/www/html/gelo-canada
 ```
 

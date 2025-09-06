@@ -1,4 +1,7 @@
 # Documentação Técnica - Sistema de Controle de Estoque
+**Desenvolvedor:** Guilherme Granville  
+**GitHub:** https://github.com/guilherme-granville/gelo-canada  
+**Versão:** 1.0.0
 
 ## 🏗️ Arquitetura do Sistema
 

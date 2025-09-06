@@ -39,7 +39,7 @@ sudo apt install apache2 php sqlite3 php-sqlite3
 2. Configurar projeto:
 ```bash
 cd /var/www/html
-git clone [repositorio]
+git clone https://github.com/guilherme-granville/gelo-canada.git
 chmod -R 755 gelo-canada
 ```
 
