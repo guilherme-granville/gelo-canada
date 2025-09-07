@@ -75,7 +75,7 @@ class Movimentacao {
             $movimentacaoId = $this->db->lastInsertId();
             
             // Atualizar estoque
-            $sql = "UPDATE estoque SET quantidade_atual = ?, ultima_movimentacao = NOW() WHERE produto_id = ?";
+            $sql = "UPDATE estoque SET quantidade_atual = ?, ultima_movimentacao = CURRENT_TIMESTAMP WHERE produto_id = ?";
             $this->db->execute($sql, [$quantidadeAtual, $dados['produto_id']]);
             
             // Registrar log

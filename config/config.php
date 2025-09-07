@@ -5,12 +5,12 @@
  */
 
 // Configurações de ambiente
-define('ENVIRONMENT', 'production'); // development, production
-define('DEBUG', false);
+define('ENVIRONMENT', 'development'); // development, production
+define('DEBUG', true);
 define('TIMEZONE', 'America/Sao_Paulo');
 
 // Configurações de banco de dados
-define('DB_TYPE', 'mysql'); // mysql, sqlite
+define('DB_TYPE', 'sqlite'); // mysql, sqlite
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'gelo_canada');
 define('DB_USER', 'gelo_user');
@@ -58,6 +58,7 @@ define('BASE_URL', 'http://localhost/gelo-canada');
 define('API_URL', BASE_URL . '/app/api');
 define('ADMIN_URL', BASE_URL . '/public/admin.php');
 define('TOTEM_URL', BASE_URL . '/public/totem.php');
+define('UI_URL', BASE_URL . '/public/ui.php');
 
 // Configurações específicas do Totem
 define('TOTEM_AUTO_LOGOUT', 300); // 5 minutos
@@ -96,16 +97,22 @@ define('MEMORY_LIMIT', '256M');
 if (ENVIRONMENT === 'development') {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-    define('DEBUG', true);
-    define('LOG_LEVEL', 'DEBUG');
+    if (!defined('DEBUG')) {
+        define('DEBUG', true);
+    }
+    if (!defined('LOG_LEVEL')) {
+        define('LOG_LEVEL', 'DEBUG');
+    }
 }
 
 // Configurações de timezone
 date_default_timezone_set(TIMEZONE);
 
-// Configurações de sessão
-ini_set('session.gc_maxlifetime', SESSION_LIFETIME);
-ini_set('session.cookie_lifetime', SESSION_LIFETIME);
+// Configurações de sessão (apenas se não estiver em CLI)
+if (php_sapi_name() !== 'cli') {
+    ini_set('session.gc_maxlifetime', SESSION_LIFETIME);
+    ini_set('session.cookie_lifetime', SESSION_LIFETIME);
+}
 
 // Configurações de memória
 ini_set('memory_limit', MEMORY_LIMIT);

@@ -65,7 +65,7 @@ $activePage = $activePage ?? '';
         </ul>
         <div class="navbar-user">
             <span>Olá, <?php echo htmlspecialchars($usuarioAtual['nome'] ?? ''); ?></span>
-            <a href="?logout=1" class="btn btn-danger">
+            <a href="../admin.php?logout=1" class="btn btn-danger">
                 <i class="fas fa-sign-out-alt"></i> Sair
             </a>
         </div>

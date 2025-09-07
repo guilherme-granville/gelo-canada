@@ -26,10 +26,19 @@ class Database {
     private function connect() {
         try {
             if ($this->dbType === 'sqlite') {
+                // Criar diretório se não existir
+                $dbDir = dirname(SQLITE_PATH);
+                if (!is_dir($dbDir)) {
+                    mkdir($dbDir, 0755, true);
+                }
+                
                 $this->connection = new PDO('sqlite:' . SQLITE_PATH);
                 $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
                 $this->connection->exec('PRAGMA foreign_keys = ON');
                 $this->connection->exec('PRAGMA journal_mode = WAL');
+                $this->connection->exec('PRAGMA synchronous = NORMAL');
+                $this->connection->exec('PRAGMA cache_size = 10000');
             } else {
                 $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
                 $this->connection = new PDO($dsn, DB_USER, DB_PASS, [
@@ -41,7 +50,7 @@ class Database {
             }
         } catch (PDOException $e) {
             error_log("Erro de conexão com banco: " . $e->getMessage());
-            throw new Exception("Erro de conexão com banco de dados");
+            throw new Exception("Erro de conexão com banco de dados: " . $e->getMessage());
         }
     }
     
